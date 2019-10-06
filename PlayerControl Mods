@@ -1,0 +1,47 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using Platformer.Gameplay;
+using static Platformer.Core.Simulation;
+using Platformer.Model;
+using Platformer.Core;
+
+namespace Platformer.Mechanics
+{
+    public class PlayerController : KinematicObject
+    {
+    
+    
+   //Mesmo script enviado no primeiro teste com a adições das funções abaixo ...
+   
+   //o jumpPad não foi implementado no projeto pois não consegui remover o bug,
+   //mas deixei o código para mostrar como tentei fazer
+   
+    private void OnTriggerEnter2D(Collider2D other)
+        {
+            if (other.tag == "CheckPoint") {
+                respawPoint = other.transform.position;
+            }
+            
+        }
+        private void OnCollisionEnter2D(Collision2D collision)
+        {
+            if (collision.gameObject.CompareTag("JumpPad")) {
+                Debug.Log("jumpad");
+                playerrb.velocity = new Vector2(0f, 10f);
+            }
+            if (collision.gameObject.CompareTag("MovingPlatform") ) {
+                this.transform.parent = collision.transform;
+            }
+        }
+        private void OnCollisionExit2D(Collision2D collision)
+        {
+            if (collision.gameObject.CompareTag("JumpPad")) {
+                UpdateJumpState();
+            }
+            if (collision.gameObject.CompareTag("MovingPlatform")) {
+                this.transform.parent = null;
+            }
+        }
+
+}
