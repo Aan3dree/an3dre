@@ -1,0 +1,23 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using Platformer.Core;
+using Platformer.Model;
+using Platformer.Mechanics;
+
+public class CheckPoint : MonoBehaviour
+{
+    private SpawnPoint point;
+
+    void Start()
+    {
+        point = GameObject.FindGameObjectWithTag("Resp").GetComponent<SpawnPoint>();
+    }
+    void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.CompareTag("Player")) {
+            point.checkPos = transform.position;
+            
+        }
+    }
+}
